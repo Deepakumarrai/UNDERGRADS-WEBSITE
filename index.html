@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnderGrads - Business Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+        .carousel-slide {
+            transition: opacity 1s ease-in-out;
+        }
+        .carousel-slide.hidden {
+            opacity: 0;
+        }
+        .carousel-slide:not(.hidden) {
+            opacity: 1;
+        }
+        .carousel-button {
+            background-color: rgba(238, 231, 231, 0.5);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-button:hover {
+            background-color: rgba(238, 231, 231, 0.5);
+        }
+        
+        /* Add new animation styles */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-scale {  
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        /* Smooth scroll behavior for the whole page */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced transitions for navigation links */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #60A5FA;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Section transition */
+        section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .mountain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+    
+    <!-- Navbar -->
+    <header id="home" class="relative">
+        <nav class="bg-gray-800 p-4 flex justify-between items-center fixed w-full top-0 shadow-md z-50">
+            <a href="/"><div class="text-2xl font-bold">UnderGrads</div></a>
+            <ul class="hidden md:flex space-x-7">
+                <li class="group relative">
+                    <a href="/" class="hover:text-blue-400 nav-link font-bold">Home</a>
+                </li>
+                <li class="group relative">
+                    <a href="#what-we-do" class="hover:text-blue-400 nav-link font-bold">What We Do</a>
+                    <ul class="absolute left-0 mt-2 w-48 bg-gray-800 text-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <li><a href="#what-we-do" class="block px-4 py-2 hover:bg-gray-700">Overview</a></li>
+                        <li><a href="#what-we-do" class="block px-4 py-2 hover:bg-gray-700">Industries</a></li>
+                        <li><a href="#what-we-do" class="block px-4 py-2 hover:bg-gray-700">Services</a></li>
+                        
+                        <li><a href="#what-we-do" class="block px-4 py-2 hover:bg-gray-700">Product&Platform</a></li>
+                    </ul>
+                </li>
+                <li class="group relative">
+                    <a href="#who-we-are" class="hover:text-blue-400 nav-link font-bold">Who We Are</a>
+                    <ul class="absolute left-0 mt-2 w-48 bg-gray-800 text-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <li><a href="#who-we-are" class="block px-4 py-2 hover:bg-gray-700">Overview</a></li>
+                        <li><a href="#who-we-are" class="block px-4 py-2 hover:bg-gray-700">About Us</a></li>
+                    </ul>
+                </li>
+                <li class="group relative">
+                    <a href="#consider-it-solved" class="hover:text-blue-400 nav-link font-bold">Consider it Solved</a>
+                    <ul class="absolute left-0 mt-2 w-48 bg-gray-800 text-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <li><a href="#consider-it-solved" class="block px-4 py-2 hover:bg-gray-700">Consider it Solved Submenu 1</a></li>
+                        <li><a href="#consider-it-solved" class="block px-4 py-2 hover:bg-gray-700">Consider it Solved Submenu 2</a></li>
+                    </ul>
+                </li>
+                <li class="group relative">
+                    <a href="#contact" class="hover:text-blue-400 nav-link font-bold">Contact</a>  
+                    <ul class="absolute left-0 mt-2 w-48 bg-gray-800 text-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <li><a href="#contact" class="block px-4 py-2 hover:bg-gray-700">Request for Service</a></li>
+                        <li><a href="#contact" class="block px-4 py-2 hover:bg-gray-700">Investor Information</a></li>
+                        <li><a href="#contact" class="block px-4 py-2 hover:bg-gray-700">Media Contact</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <input type="text" placeholder="Search..." class="p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none hidden md:block">
+            <button class="md:hidden text-white" id="menu-toggle"><box-icon name='menu'></box-icon></button>
+        </nav>
+        <ul class="md:hidden bg-gray-800 text-white p-4 space-y-2 hidden" id="mobile-menu">
+            <li><a href="#home" class="block px-4 py-2 hover:bg-gray-700 nav-link">Home</a></li>
+            <li><a href="#what-we-do" class="block px-4 py-2 hover:bg-gray-700 nav-link">What We Do</a></li>
+            <li><a href="#who-we-are" class="block px-4 py-2 hover:bg-gray-700 nav-link">Who We Are</a></li>
+            <li><a href="#consider-it-solved" class="block px-4 py-2 hover:bg-gray-700 nav-link">Consider it Solved</a></li>
+            <li><a href="#contact" class="block px-4 py-2 hover:bg-gray-700 nav-link">Contact</a></li>
+            <li><input type="text" placeholder="Search..." class="p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none w-full"></li>
+        </ul>
+        <!-- Hero Section -->
+        <div class="relative w-full h-screen z-10 flex items-center justify-center">
+            <div class="carousel-container relative w-full h-full overflow-hidden">
+                <div class="carousel-slide absolute w-full h-full bg-cover bg-center" style="background-image: url('https://static.vecteezy.com/system/resources/previews/026/423/787/non_2x/abstract-technology-background-with-circuit-board-and-blue-lights-digital-communication-line-concept-graphic-hardware-computer-tech-integrated-energy-design-information-internet-generative-ai-photo.jpg');">
+                    <div class="carousel-text absolute bottom-10 left-10 text-white bg-black bg-opacity-50 p-4 rounded">
+                        <h1 class="text-5xl font-extrabold">Welcome to UnderGrads</h1>
+                        <p class="text-lg mt-2">Empowering Businesses with Advanced Technology</p>
+                    </div>
+                </div>
+                <div class="carousel-slide absolute w-full h-full bg-cover bg-center hidden" style="background-image: url('https://img.freepik.com/premium-photo/3d-render-metaverse-technology-background-with-blockchain-network-connections_685067-2639.jpg?w=2000');">
+                    <div class="carousel-text absolute bottom-10 left-10 text-white bg-black bg-opacity-50 p-4 rounded">
+                        <h1 class="text-5xl font-extrabold">Innovative Solutions</h1>
+                        <p class="text-lg mt-2">Leading the Future of Technology</p>
+                    </div>
+                </div>
+                <div class="carousel-slide absolute w-full h-full bg-cover bg-center hidden" style="background-image: url('https://miro.medium.com/max/7728/1*Ab8SnQ0cKCO7SUmTuqLKMg.jpeg');">
+                    <div class="carousel-text absolute bottom-10 left-10 text-white bg-black bg-opacity-50 p-4 rounded">
+                        <h1 class="text-5xl font-extrabold">Cutting-Edge Technology</h1>
+                        <p class="text-lg mt-2">Transforming Ideas into Reality</p>
+                    </div>
+                </div>
+                <div class="carousel-slide absolute w-full h-full bg-cover bg-center hidden" style="background-image: url('https://th.bing.com/th/id/R.0fdb76254395500e10ba67b76228350f?rik=Ikel8tYcvE9xKQ&riu=http%3a%2f%2fwww.ebssol.com%2fwp-content%2fuploads%2f2016%2f01%2fData-Analytics-banner.jpg&ehk=HPey7e0LAmFwp%2bdpBs9Fp8Ks7YnBw4NppIUX5m3unIw%3d&risl=&pid=ImgRaw&r=0');">
+                    <div class="carousel-text absolute bottom-10 left-10 text-white bg-black bg-opacity-50 p-4 rounded">
+                        <h1 class="text-5xl font-extrabold">Data Analytics</h1>
+                        <p class="text-lg mt-2">Unlocking Insights for Better Decisions</p>
+                    </div>
+                </div>
+                <div class="carousel-slide absolute w-full h-full bg-cover bg-center hidden" style="background-image: url('https://miro.medium.com/max/7728/1*Ab8SnQ0cKCO7SUmTuqLKMg.jpeg');">
+                    <div class="carousel-text absolute bottom-10 left-10 text-white bg-black bg-opacity-50 p-4 rounded">
+                        <h1 class="text-5xl font-extrabold">AI and Machine Learning</h1>
+                        <p class="text-lg mt-2">Driving Innovation with Intelligent Systems</p>
+                    </div>
+                </div>
+                <!-- Navigation buttons -->
+                <button id="prev-slide" class="carousel-button hover-scale absolute left-0 top-1/2 transform -translate-y-1/2 text-white p-2"><box-icon name='skip-previous'></box-icon></button>
+                <button id="next-slide" class="carousel-button hover-scale absolute right-0 top-1/2 transform -translate-y-1/2 text-white p-2"><box-icon name='skip-next'></box-icon></button>
+            </div>
+        </div>
+    </header>
+    <body class="bg-gray-900 text-white">
+        <section id="transforming-businesses" class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">Transforming Businesses</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://th.bing.com/th/id/OIP.RJ5N5U7kS47pI25duZgc0QHaEe?rs=1&pid=ImgDetMain">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Marketing & Branding</h3>
+                            <p class="text-gray-400">Strategic campaigns, digital presence management, and content creation to drive brand growth.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://th.bing.com/th/id/R.d3dd40e02960d79f0a53162596dcec34?rik=lgUqZWnuJsYxgg&riu=http%3a%2f%2ftopazconsultancy.in%2fimages%2fconsultancy.jpg&ehk=vquaD4PIadTPITmPgWas2UoiJyV3TFhbgwdy7rpb4%2b4%3d&risl=&pid=ImgRaw&r=0">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Manpower Consultancy</h3>
+                            <p class="text-gray-400">Helping organizations build high-performing teams with efficient recruitment and talent acquisition strategies.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://wallpaperaccess.com/full/656693.jpg" alt="AI Solutions" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Business Strategy & Operation</h3>
+                            <p class="text-gray-400">Process optimization, workflow management, and operational consulting to enhance efficiency</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://c4.wallpaperflare.com/wallpaper/22/762/507/film-movie-filmmaker-movie-director-wallpaper-preview.jpg" alt="Cybersecurity" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Film & Media Production</h3>
+                            <p class="text-gray-400">High-impact ad shoots, corporate videos, documentaries, and storytelling that resonate with audiences</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://th.bing.com/th/id/OIP.L2i9yYZnisqOxTYID_RDOQHaEK?rs=1&pid=ImgDetMain" alt="Cloud Solutions" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Technology & Digital Solutions</h3>
+                            <p class="text-gray-400">Website development, automation, and digital transformation to enhance business scalability</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://wallpapercave.com/wp/wp3950068.jpg" alt="Innovation" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Digital Marketing</h3>
+                            <p class="text-gray-400">Social media management, content creation, SEO, performance marketing, and digital ad campaigns.</p>
+                        </div>
+                    </div>
+                     <!-- Card 7 -->
+                     <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://c8.alamy.com/comp/W3MC06/event-management-concept-event-management-flowchart-event-management-related-items-mixed-media-business-W3MC06.jpg" alt="Innovation" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Event Management</h3>
+                            <p class="text-gray-400">Corporate events, brand activations, promotional campaigns, and community engagement.</p>
+                        </div>
+                      </div>
+                      <!-- Card 8 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/034/454/089/small_2x/market-research-concept-business-team-using-laptop-coputer-on-office-desk-with-market-research-icon-on-virtual-screen-business-financial-stock-market-photo.jpg" alt="Innovation" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Market Research and Sales Management</h3>
+                            <p class="text-gray-400">Consumer insights, competitor analysis, sales strategies, and business expansion support.</p>
+                        </div>
+                    </div>
+                    <!-- Card 7 -->
+                    <div class="group hover-scale bg-transparent rounded-lg overflow-hidden shadow-lg transition-all duration-300">
+                        <img src="https://th.bing.com/th/id/R.0f42ec0a612b8b80166dc447a681c733?rik=nQPoCjGhjTrvsA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fpng-logo-design-logo-brand-design-459.png&ehk=%2bMHRGKFFnMUJ%2bPhQn9De02F%2bB0utFDUUv0iQ5Sj0MJo%3d&risl=&pid=ImgRaw&r=0" alt="Innovation" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Logo and Graphic Design</h3>
+                            <p class="text-gray-400">Logo creation, packaging design, visual identity development, and IEC materials.</p>
+                        </div>
+                      </div>
+                   </div>
+
+            <!-- Full-width Image Section -->
+            <div class="relative w-full h-96 my-20">
+                <img class="mountain"src="https://c4.wallpaperflare.com/wallpaper/935/156/893/himalayas-massif-night-night-sky-wallpaper-preview.jpg" 
+                     alt="Business Technology" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
+                    <h2 class="text-4xl font-bold mb-4">Transforming Ideas into Reality</h2>
+                    <p class="text-xl">Innovative solutions for the digital age</p>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-4 mt-20">
+                <p class="font-extrabold text-3xl px-5 mb-10">Select Your Industry. Discover Our Impacts</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-5">
+                    <!-- Column 1 -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='rupee' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Marketing & Branding</p>
+                        </div>
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='broadcast' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Manpower Consultancy</p>
+                        </div>
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='book-open' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Business Strategy & Operation</p>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='plus-medical' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Film & Media Production</p>
+                        </div>
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='factory' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Technology & Digital Solutions</p>
+                        </div>
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='shield' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Digital Marketing</p>
+                        </div>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='store' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Event Managment</p>
+                        </div>
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='line-chart' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Market Research and Sales Managment</p>
+                        </div>
+                        <div class="flex items-center space-x-2 hover:text-blue-400 cursor-pointer transition-colors duration-300">
+                            <box-icon name='plus-circle' class="text-blue-400"></box-icon>
+                            <p class="font-bold">Logo and Graphic Design
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Grid Section -->
+            <div class="container mx-auto px-4 mt-20">
+                <h2 class="text-4xl font-bold text-center mb-12">Trusted by Over the past 10 years we’ve helped more than 50 organisations create breakthrough innovation, digital products, services and tools</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="hover-scale">
+                        <img src="https://www.rishwikatraders.com/assets/images/clients/surabhi-industries-pvt-ltd.jpg" alt="Sarbani" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                        <h3 class="text-xl font-bold mb-2">Sarbani</h3>                        
+                    </div>
+                    <div class="hover-scale">
+                        <img src="https://vakilsearch.com/blog/wp-content/uploads/2023/01/SIDBI.png" alt="Sidbi" class="Rounded-lg shadow-lg w-full h-48 object-cover">
+                        <h3 class="text-xl font-bold mb-2">Sidbi</h3>                        
+                    </div>
+                   
+                    <div class="hover-scale">
+                        <img src="https://assamtribune.com/h-upload/images/FGFI87E4IjPrZGbNMBa592vCDL84HDbL.jpg" alt="NREGA" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                        <h3 class="text-xl font-bold mb-2">NREGA</h3>                        
+                    </div>                
+                <div class="hover-scale">
+                    <img src="https://i.ytimg.com/vi/yEyfK8Nfqh0/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFkgXyhlMA8=&rs=AOn4CLDezfkJzk0TenHA86MVyZmy0F47zg" alt="Himmotthan" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Himmotthan</h3>
+                </div>
+                <div class="hover-scale">
+                    <img src="https://th.bing.com/th/id/R.86c4f179dc2ff466fc0033b7385970e4?rik=haQ4wHkyiw1yiA&riu=http%3a%2f%2fstatic1.squarespace.com%2fstatic%2f6283a74e2389684bf1516f99%2ft%2f6285381f1c769d325f5eb7dc%2f1652897827205%2fCirclelogo%2bbackground%2bremoved.png%3fformat%3d1500w&ehk=TGWu0bylv8UTBhkpaLnTTvITMPiw7cXDx35xUEwtaY8%3d&risl=&pid=ImgRaw&r=0" alt="Goodlyfe Hostels And Homes" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Goodlyfe Hostels And Homes</h3>
+                </div>
+                <div class="hover-scale">
+                    <img src="https://th.bing.com/th/id/OIP.igvF6wqlSxFS-5T7gf4SOgHaHa?rs=1&pid=ImgDetMain" alt="District Administration Bargarh" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">District Administration Bargarh </h3>                   
+                </div>
+                <div class="hover-scale">
+                    <img src="https://www.ncertbooks.guru/wp-content/uploads/2021/04/Election-commission-of-india-1024x576.png" alt=" ElectionCommission Of India" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">ElectionCommission Of India</h3>
+                    
+                </div>  <div class="hover-scale">
+                    <img src="https://yt3.googleusercontent.com/ytc/AOPolaTfDJe8QO81fp7Ds4UBJ96_NI8wla-_CuRJ0A7N=s900-c-k-c0x00ffffff-no-rj" alt="Randha Ghar" class="Rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Randha Ghar </h3>                    
+                </div>
+                <div class="hover-scale">
+                    <img src="https://apoorvaroyale.com/wp-content/uploads/2022/08/AR_Ad_Sep_2022_Logo-scaled.jpg" alt="Hotel Appoorva Royale" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Hotel Appoorva Royale</h3>                    
+                </div>
+                <div class="hover-scale">
+                    <img src="https://th.bing.com/th/id/OIP.WyRxBi04cEv3jnT56D-LvQAAAA?rs=1&pid=ImgDetMain" alt="Nergy Solar" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Nergy Solar</h3>                    
+                </div>
+                <div class="hover-scale">
+                    <img src="https://th.bing.com/th/id/R.62436d5dcccc4bbc0c632bc01a17b3dd?rik=5aIRNQSykajT%2fQ&riu=http%3a%2f%2fframesinaction.com%2fwp-content%2fuploads%2f2018%2f02%2fSARA_MOHINANI-1.png&ehk=C6ZWCocTuSsaJxQ3jPKQedIACpvIWdkpU4u%2brPGJn2s%3d&risl=&pid=ImgRaw&r=0" alt="Saaras" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Saaras</h3>                    
+                </div>
+                <div class="hover-scale">
+                    <img src="https://learn21.org/wp-content/uploads/2022/10/New_edWise-02-1024x585.png" alt="Newton Edwise" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Newton Edwise</h3>                    
+                    <img src="https://th.bing.com/th/id/R.b685ff661ea9b7544344a9e4b9c22aca?rik=GfwMTeM2Gb7Uiw&riu=http%3a%2f%2fwww.pradan.net%2fwp-content%2fuploads%2f2017%2f10%2fpradan-logo.png&ehk=RPUt312dfxKasRq7sGEfhMwuBexDbkReO7hcz8CTXLc%3d&risl=&pid=ImgRaw&r=0" alt="Pradan" class="rounded-lg shadow-lg w-full h-48 object-cover">
+                    <h3 class="text-xl font-bold mb-2">Pradan</h3>
+                </div>
+            </div>
+        </section>
+    </body>
+    
+
+    <script>
+        // Add fade-in effect on scroll
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-center py-5 mt-5">
+        <p>&copy; 2025 UnderGrads. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Carousel functionality
+        let slides = document.querySelectorAll(".carousel-slide");
+        let index = 0;
+
+        function showSlide(i) {
+            slides.forEach((slide, idx) => {
+                slide.classList.toggle("hidden", idx !== i);
+            });
+        }
+
+        function nextSlide() {
+            index = (index + 1) % slides.length;
+            showSlide(index);
+        }
+
+        function prevSlide() {
+            index = (index - 1 + slides.length) % slides.length;
+            showSlide(index);
+        }
+
+        // Initialize the carousel
+        showSlide(index);
+
+        // Auto-slide every 3 seconds
+        setInterval(nextSlide, 3000);
+
+        // Add event listeners for manual navigation
+        document.getElementById('next-slide').addEventListener('click', nextSlide);
+        document.getElementById('prev-slide').addEventListener('click', prevSlide);
+
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Links</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="social-container">
+        <a href="https://www.instagram.com/undergrads_media?igsh=MXJ3YmYxaXdhZzdpMA==" target="_blank">
+            <img src="instragram.png" alt="Instagram">
+        </a>
+        <a href="https://www.linkedin.com/company/the-undergrads-media/" target="_blank">
+            <img src="C:\Users\deepa\Downloads\project\linkdin.png" alt="LinkedIn">
+        </a>
+        <a href="https://twitter.com/yourprofile" target="_blank">
+            <img src="linkdin.png" alt="Twitter">
+        </a>
+    </div>
+
+</body>
+</html>
